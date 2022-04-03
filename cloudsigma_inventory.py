@@ -23,7 +23,7 @@ DOCUMENTATION = r"""
             description: Token that ensures this is a source file for the plugin
             required: true
             choices: ['cloudsigma_inventory']
-        region:
+        cloudsigma_region:
             description: >
                 Cloudsigma L(region code,https://docs.cloudsigma.com/en/latest/general.html\#api-endpoint)
             type: string
@@ -123,7 +123,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
         # update any options declared in DOCUMENTATION as needed
         self._read_config_data(path)
 
-        region = self.get_option("region").lower()
+        region = self.get_option("cloudsigma_region").lower()
         if not region in _CLOUDSIGMA_REGIONS:
             raise (AnsibleError(f"Invalid region: {region}"))
 
