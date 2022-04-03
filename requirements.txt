@@ -1,0 +1,2 @@
+cloudsigma>=1.0
+ansible-core>=2.11.5
