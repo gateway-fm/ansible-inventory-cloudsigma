@@ -1,8 +1,11 @@
-from __future__ import absolute_import, division, print_function
-import json
 from typing import Any, List, Mapping
+from ansible.errors import AnsibleError
+from ansible.plugins.inventory import BaseInventoryPlugin
+from ansible.plugins.inventory import Cacheable
+from ansible.plugins.inventory import Constructable
 
-__metaclass__ = type
+import cloudsigma
+
 
 DOCUMENTATION = r"""
     name: cloudsigma_inventory
@@ -66,15 +69,6 @@ DOCUMENTATION = r"""
 
 """
 
-from ansible.errors import AnsibleError
-from ansible.plugins.inventory import BaseInventoryPlugin
-from ansible.plugins.inventory import Cacheable
-from ansible.plugins.inventory import Constructable
-from ansible.template import Templar
-
-import cloudsigma
-from pprint import pprint
-
 
 _CLOUDSIGMA_REGIONS = {
     "crk": {"location": "Clark, Philippines", "http_endpoint": "https://crk.cloudsigma.com/api/2.0/"},
@@ -104,12 +98,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 
     def verify_file(self, path: str):
         """return true/false if this is possibly a valid file for this plugin to consume"""
-        valid = False
-        if super(InventoryModule, self).verify_file(path):
-            # base class verifies that file exists and is readable by current user
-            if path.endswith(("cloudsigma.yaml", "cloudsigma.yml")):
-                valid = True
-        return valid
+        return super(InventoryModule, self).verify_file(path) and path.endswith(("cloudsigma.yaml", "cloudsigma.yml"))
 
     def _get_server_tag_names(self, server: Any) -> List[str]:
         return [self._tags_uuid_map[tag["uuid"]]["name"] for tag in server["tags"]]
