@@ -1,4 +1,4 @@
-## Dynamic Ansible invntory plugin for Cloudsigma
+## Dynamic Ansible inventory plugin for Cloudsigma
 ---
 ## Installation notes
 
@@ -10,4 +10,4 @@
   * ```export ANSIBLE_INVENTORY_ENABLED=cloudsigma_inventory```
 
 Credentials are provided by CLOUDSIGMA_USERNAME and CLOUDSIGMA_PASSWORD environment variables.
-This can be overriden by explicitry specifying cloudsigma_username and cloudsigma_password in an inventory file.
+This can be overridden by explicitly specifying cloudsigma_username and cloudsigma_password in an inventory file.
